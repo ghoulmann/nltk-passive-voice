@@ -16,6 +16,7 @@ import sys
 import os
 from itertools import dropwhile
 import postagger
+from itertools import *
 
 TAGGER = None
 
@@ -31,7 +32,7 @@ def passivep(tags):
     sentence."""
     # Particularly, if we see a "BE" verb followed by some other, non-BE
     # verb, except for a gerund, we deem the sentence to be passive.
-    
+
     postToBe = list(dropwhile(lambda(tag): not tag.startswith("BE"), tags))
     nongerund = lambda(tag): tag.startswith("V") and not tag.startswith("VBG")
 
@@ -44,14 +45,52 @@ def oneline(sent):
     """Replace CRs and LFs with spaces."""
     return sent.replace("\n", " ").replace("\r", " ")
 
+"""
 def print_if_passive(sent):
-    """Given a sentence, tag it and print if we think it's a passive-voice
-    formation."""
+    #Given a sentence, tag it and print if we think it's a passive-voice
+    #formation.
     tagged = tag_sentence(sent)
     tags = map( lambda(tup): tup[1], tagged)
 
     if passivep(tags):
         print "passive:", oneline(sent)
+"""
+def report_if_passive(sent):
+    """
+    Given a sentences, tag it and save to list if it looks like passive voice
+    formation
+    """
+    tagged = tag_sentence(sent)
+    tags = map ( lambda(tup): tup[1], tagged)
+    counter = 0
+    report = []
+    if passivep(tags):
+        for tag in tags:
+            raw_report = "Passive: " + str(oneline(sent))
+        #sent_report = nltk.sent_tokenize(raw_report)
+        #report = list(chain.from_iterable(sent_report))
+        list_report = raw_report.split("\n")
+        for x in list_report:
+            if hasattr(x, '__iter__'):
+                for y in flatten(x):
+                    yield y
+            else:
+                yield x
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 punkt = nltk.tokenize.punkt.PunktSentenceTokenizer()
 def findpassives(fn):
@@ -60,14 +99,14 @@ def findpassives(fn):
         sentences = punkt.tokenize(text)
 
         for sent in sentences:
-            print_if_passive(sent)
+            report_if_passive(sent)
 
 def repl():
     """Read eval (for passivity) print loop."""
     try:
         while True:
             line = raw_input()
-            print_if_passive(line)
+            report_if_passive(line)
     except EOFError,e:
         pass
 
@@ -75,12 +114,14 @@ def main():
     global TAGGER
     TAGGER = postagger.get_tagger()
 
-    if len(sys.argv) > 1:
-        for fn in sys.argv[1:]:
+    if len(sys.argv) > 2:
+        for fn in sys.argv[2:]:
             findpassives(fn)
     else:
-        repl()
+        fn = "swartz.txt"
+        findpassives(fn)
+
+
 
 if __name__ == "__main__":
     main()
-
