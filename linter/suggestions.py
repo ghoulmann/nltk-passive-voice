@@ -2,7 +2,7 @@ import proselint
 
 suggest = proselint.tools.lint
 
-fh = open("data/example.txt", "r")
+fh = open("../data/example.txt", "r")
 raw_text = fh.read()
 fh.close()
 
@@ -18,7 +18,7 @@ def process_suggestions(list):
 
 
 def about_linter():
-    fh = open("data/suggestions.txt")
+    fh = open("../data/suggestions.txt")
     raw_text = fh.readlines()
     about_suggestions = []
     for line in raw_text:

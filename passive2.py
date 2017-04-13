@@ -58,7 +58,7 @@ def sentence_tokenizer(fn):
 
 
 
-def main(*fn):
+def main():
     """
     This is the main function.
 
