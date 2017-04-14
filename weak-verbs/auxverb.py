@@ -28,7 +28,10 @@ def process_file(file):
     return raw_text
 
 def aux_verb_test(sentence):
-    verbs = ["am", "is", "are", "was", "were", "be", "being", "been", "may", "might", "must", "can", "could", "shall", "should", "will", "would", "do", "does", "did", "has", "have", "had"]
+    verbs = ["am", "is", "are", "was", "were", "be", "being", 
+        "been", "may", "might", "must", "can", "could", "shall", 
+	"should", "will", "would", "do", "does", "did", "has", "have", 
+	"had", "do", "has", "have", "had"]
 
     for verb in verbs:
         if verb in sentence:
@@ -47,6 +50,9 @@ def main():
     for sentence in raw_text:
 	if aux_verb_test(sentence):
             aux_verb_count = aux_verb_count + 1
-    print("Sentences with auxiliary verbs: " + str(100 * float(aux_verb_count)/float(len(raw_text))) + " %")
+    print("Lard Factor Indicators\n=================================\n\n") 
+    print("* Sentences with auxiliary verbs: " + str(100 * float(aux_verb_count)/float(len(raw_text))) + " %")
+    print("* Diluted Noun Strings (prepositions): ")
+    print("* passive voice indication: "),
 
 main()
