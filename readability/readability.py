@@ -1,5 +1,6 @@
 from textstat.textstat import textstat
 
+
 fh = open("../data/example.txt", "r")
 raw_text = fh.read()
 fh.close()
@@ -12,7 +13,7 @@ def readability(text):
     print str(textstat.flesch_reading_ease(text)) + "\n"
     print("Smog Index\n________________________\n\n")
     print str(textstat.smog_index(text)) + "\n"
-    print("Flesch Kincaid Grae\n________________________\n\n")
+    print("Flesch Kincaid Grade\n________________________\n\n")
     print str(textstat.flesch_kincaid_grade(text)) + "\n"
     print("Coleman Liau Index\n________________________\n\n")
     print str(textstat.coleman_liau_index(text)) + "\n"
@@ -29,4 +30,6 @@ def readability(text):
     print "Compiled Score\n_____________________________\n\n"
     print str(textstat.text_standard(text)) + "\n"
 
+
+    return len(adjectives)
 readability(text)
